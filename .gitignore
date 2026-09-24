@@ -1,6 +1,7 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !checkstyle.xml
+src/main/resources/application.properties
 
 ### IntelliJ IDEA ###
 .idea/
