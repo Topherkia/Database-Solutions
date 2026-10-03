@@ -15,14 +15,18 @@ public class AssociationTestRunner implements CommandLineRunner {
     private final SupplierRepository supplierRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final CustomerRepository customerRepository;
 
     public AssociationTestRunner(
-            SupplierRepository supplierRepository,
-            OrderRepository orderRepository,
-            ProductRepository productRepository) {
+        SupplierRepository supplierRepository,
+        OrderRepository orderRepository,
+        ProductRepository productRepository,
+        CustomerRepository customerRepository) {
+
         this.supplierRepository = supplierRepository;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -89,12 +93,19 @@ public class AssociationTestRunner implements CommandLineRunner {
         product.setStockQuantity(100);
         Product savedProduct = productRepository.save(product);
 
-        // 2. Create Order
+        // 2. Fetch an existing customer
+        Customer customer = customerRepository.findAll()
+        .stream()
+        .findFirst()
+        .orElseThrow(() -> new RuntimeException("No customer found"));
+
+        // 3. Create Order
         Order order = new Order();
+        order.setCustomer(customer);
         order.setOrderDate(LocalDateTime.now());
         order.setStatus("NEW");
 
-        // 3. Create OrderItem (Join table payload entity)
+        // 4. Create OrderItem (Join table payload entity)
         OrderItem orderItem = new OrderItem();
         orderItem.setProduct(savedProduct);
         orderItem.setQuantity(2);
