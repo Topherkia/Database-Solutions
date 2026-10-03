@@ -4,14 +4,26 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.dbsproj.converter.OrderStatus;
+import com.example.dbsproj.converter.OrderStatusConverter;
+import com.example.dbsproj.listener.OrderLifecycleListener;
 
 @Entity
 @Table(name = "orders")
+@EntityListeners(OrderLifecycleListener.class)
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Convert(converter = OrderStatusConverter.class)
+    @Column(name = "status", length = 50)
+    private OrderStatus status;
+
+    // Constructors, Getters, and Setters
+    public OrderStatus getStatus() { return status; }
+    public void setStatus(OrderStatus status) { this.status = status; }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
@@ -20,7 +32,7 @@ public class Order {
     @Column(name = "order_date", nullable = false)
     private LocalDateTime orderDate;
 
-    private String status;
+    // Old code private String status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
@@ -50,13 +62,13 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public String getStatus() {
+    /* public String getStatus() {
         return status;
-    }
+    }  */
 
-    public void setStatus(String status) {
+    /*public void setStatus(String status) {
         this.status = status;
-    }
+    } */
 
     public List<OrderItem> getItems() {
         return items;

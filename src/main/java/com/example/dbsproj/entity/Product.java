@@ -11,17 +11,20 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "stock_quantity", nullable = false)
+    private Integer stockQuantity;
+
+    @Version
+    @Column(name = "version")
+    private Long version;
 
     private String description;
 
     @Column(nullable = false)
     private BigDecimal price;
-
-    @Column(name = "stock_quantity", nullable = false)
-    private Integer stockQuantity = 0;
-
     // Direct mapping to ProductCategory entity
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
@@ -54,4 +57,6 @@ public class Product {
 
     public Integer getSupplierId() { return supplierId; }
     public void setSupplierId(Integer supplierId) { this.supplierId = supplierId; }
+
+    public Long getVersion() { return version; }
 }
