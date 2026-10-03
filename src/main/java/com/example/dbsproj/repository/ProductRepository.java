@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     // Custom query method to find products by category ID
-    List<Product> findByCategoryId(Long categoryId);
+    List<Product> findByCategoryId(Integer categoryId);
 
     // Custom query method to find products associated with a specific supplier
-    List<Product> findBySupplierId(Long supplierId);
+    List<Product> findBySupplierId(Integer supplierId);
 }

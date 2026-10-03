@@ -1,9 +1,9 @@
 package com.example.dbsproj.repository;
 
-import com.example.dbsproj.entity.Supplier;
+import com.example.dbsproj.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 }

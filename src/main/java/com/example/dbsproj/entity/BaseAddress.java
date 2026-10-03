@@ -7,7 +7,7 @@ public abstract class BaseAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "street_address", nullable = false)
     private String streetAddress;
@@ -21,8 +21,8 @@ public abstract class BaseAddress {
     private String country;
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getStreetAddress() { return streetAddress; }
     public void setStreetAddress(String streetAddress) { this.streetAddress = streetAddress; }

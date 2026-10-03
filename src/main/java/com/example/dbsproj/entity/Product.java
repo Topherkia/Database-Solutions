@@ -9,7 +9,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private String name;
@@ -28,14 +28,14 @@ public class Product {
     private ProductCategory category;
 
     @Column(name = "supplier_id")
-    private Long supplierId;
+    private Integer supplierId;
 
     // Constructors
     public Product() {}
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -52,6 +52,6 @@ public class Product {
     public ProductCategory getCategory() { return category; }
     public void setCategory(ProductCategory category) { this.category = category; }
 
-    public Long getSupplierId() { return supplierId; }
-    public void setSupplierId(Long supplierId) { this.supplierId = supplierId; }
+    public Integer getSupplierId() { return supplierId; }
+    public void setSupplierId(Integer supplierId) { this.supplierId = supplierId; }
 }

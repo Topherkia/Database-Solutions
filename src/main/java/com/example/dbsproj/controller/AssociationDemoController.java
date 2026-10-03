@@ -27,7 +27,7 @@ public class AssociationDemoController {
 
     // Example 1: Fetch Order with items and products (N:M Verification)
     @GetMapping("/orders/{id}")
-    public ResponseEntity<?> getOrderWithProducts(@PathVariable Long id) {
+    public ResponseEntity<?> getOrderWithProducts(@PathVariable Integer id) {
         return orderRepository.findByIdWithProducts(id)
                 .map(order -> {
                     Map<String, Object> response = new HashMap<>();
@@ -50,7 +50,7 @@ public class AssociationDemoController {
 
     // Example 2: Fetch Supplier with address inherited properties (1:1 & Inheritance Verification)
     @GetMapping("/suppliers/{id}")
-    public ResponseEntity<?> getSupplierWithAddress(@PathVariable Long id) {
+    public ResponseEntity<?> getSupplierWithAddress(@PathVariable Integer id) {
         return supplierRepository.findById(id)
                 .map(supplier -> {
                     Map<String, Object> response = new HashMap<>();
