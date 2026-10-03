@@ -2,16 +2,24 @@ package com.example.dbsproj.repository;
 
 import com.example.dbsproj.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.math.BigDecimal;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Integer>, ProductRepositoryCustom {
 
-    // Custom query method to find products by category ID
-    List<Product> findByCategoryId(Integer categoryId);
+    // Technical Objective 2: JPQL Bulk Update
+    @Modifying
+    @Query("UPDATE Product p SET p.price = p.price * :multiplier WHERE p.category.id = :categoryId")
+    int bulkUpdatePriceByCategory(@Param("categoryId") Integer categoryId, @Param("multiplier") BigDecimal multiplier);
 
-    // Custom query method to find products associated with a specific supplier
-    List<Product> findBySupplierId(Integer supplierId);
+    // Technical Objective 2: JPQL Bulk Delete
+    @Modifying
+    @Query("DELETE FROM Product p WHERE p.stockQuantity = 0 AND p.category.id = :categoryId")
+    int bulkDeleteOutOfStockByCategory(@Param("categoryId") Integer categoryId);
 }
