@@ -4,8 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DbsProjApplication {
+public class DbsprojApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(DbsProjApplication.class, args);
+        SpringApplication.run(DbsprojApplication.class, args);
     }
 }
