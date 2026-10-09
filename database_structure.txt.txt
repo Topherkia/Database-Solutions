@@ -1,0 +1,244 @@
+MariaDB [db_sols]> SHOW TABLES;
++--------------------+
+| Tables_in_db_sols  |
++--------------------+
+| contacts           |
+| customeraddresses  |
+| customers          |
+| order_status_audit |
+| orderitems         |
+| orders             |
+| productcategories  |
+| products           |
+| supplieraddresses  |
+| suppliers          |
+| v_order_details    |
++--------------------+
+11 rows in set (0.004 sec)
+
+MariaDB [db_sols]> DESC contacts;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| email     | varchar(255) | NO   |     | NULL    |                |
+| reference | char(32)     | NO   |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+3 rows in set (0.015 sec)
+
+MariaDB [db_sols]> DESC customeraddresses;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int(11)      | NO   | PRI | NULL    | auto_increment |
+| customer_id    | int(11)      | NO   | MUL | NULL    |                |
+| street_address | varchar(255) | NO   |     | NULL    |                |
+| postal_code    | varchar(20)  | YES  |     | NULL    |                |
+| city           | varchar(100) | NO   |     | NULL    |                |
+| country        | varchar(100) | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.007 sec)
+
+MariaDB [db_sols]> DESC customers;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| first_name | varchar(100) | NO   |     | NULL    |                |
+| last_name  | varchar(100) | NO   |     | NULL    |                |
+| email      | varchar(255) | NO   |     | NULL    |                |
+| phone      | varchar(30)  | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.005 sec)
+
+MariaDB [db_sols]> DESC order_status_audit;
++------------+-------------+------+-----+---------------------+----------------+
+| Field      | Type        | Null | Key | Default             | Extra          |
++------------+-------------+------+-----+---------------------+----------------+
+| id         | int(11)     | NO   | PRI | NULL                | auto_increment |
+| order_id   | int(11)     | NO   |     | NULL                |                |
+| old_status | varchar(50) | YES  |     | NULL                |                |
+| new_status | varchar(50) | YES  |     | NULL                |                |
+| changed_at | datetime    | YES  |     | current_timestamp() |                |
++------------+-------------+------+-----+---------------------+----------------+
+5 rows in set (0.006 sec)
+
+MariaDB [db_sols]> DESC orderitems;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| order_id   | int(11)       | NO   | PRI | NULL    |       |
+| product_id | int(11)       | NO   | PRI | NULL    |       |
+| quantity   | int(11)       | NO   |     | NULL    |       |
+| unit_price | decimal(10,2) | NO   |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+4 rows in set (0.004 sec)
+
+MariaDB [db_sols]> DESC orders;
++---------------------+-------------+------+-----+---------------------+----------------+
+| Field               | Type        | Null | Key | Default             | Extra          |
++---------------------+-------------+------+-----+---------------------+----------------+
+| id                  | int(11)     | NO   | PRI | NULL                | auto_increment |
+| customer_id         | int(11)     | NO   | MUL | NULL                |                |
+| order_date          | datetime    | NO   |     | current_timestamp() |                |
+| delivery_date       | datetime    | YES  |     | NULL                |                |
+| shipping_address_id | int(11)     | YES  | MUL | NULL                |                |
+| status              | varchar(50) | YES  |     | NEW                 |                |
++---------------------+-------------+------+-----+---------------------+----------------+
+6 rows in set (0.003 sec)
+
+MariaDB [db_sols]> DESC productcategories;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(100) | NO   |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.006 sec)
+
+MariaDB [db_sols]> DESC products;
++----------------+---------------+------+-----+---------+----------------+
+| Field          | Type          | Null | Key | Default | Extra          |
++----------------+---------------+------+-----+---------+----------------+
+| id             | int(11)       | NO   | PRI | NULL    | auto_increment |
+| name           | varchar(255)  | NO   |     | NULL    |                |
+| description    | text          | YES  |     | NULL    |                |
+| price          | decimal(10,2) | NO   |     | NULL    |                |
+| stock_quantity | int(11)       | NO   |     | 0       |                |
+| category_id    | int(11)       | YES  | MUL | NULL    |                |
+| supplier_id    | int(11)       | YES  | MUL | NULL    |                |
++----------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.003 sec)
+
+MariaDB [db_sols]> DESC supplieraddresses;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int(11)      | NO   | PRI | NULL    | auto_increment |
+| supplier_id    | int(11)      | NO   | MUL | NULL    |                |
+| street_address | varchar(255) | NO   |     | NULL    |                |
+| postal_code    | varchar(20)  | YES  |     | NULL    |                |
+| city           | varchar(100) | NO   |     | NULL    |                |
+| country        | varchar(100) | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.003 sec)
+
+MariaDB [db_sols]> DESC suppliers;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name         | varchar(255) | NO   |     | NULL    |                |
+| contact_name | varchar(100) | YES  |     | NULL    |                |
+| phone        | varchar(30)  | YES  |     | NULL    |                |
+| email        | varchar(255) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.005 sec)
+
+MariaDB [db_sols]> DESC v_order_details;
++----------------+---------------+------+-----+---------------------+-------+
+| Field          | Type          | Null | Key | Default             | Extra |
++----------------+---------------+------+-----+---------------------+-------+
+| order_id       | int(11)       | NO   |     | 0                   |       |
+| order_date     | datetime      | NO   |     | current_timestamp() |       |
+| order_status   | varchar(50)   | YES  |     | NEW                 |       |
+| customer_name  | varchar(201)  | YES  |     | NULL                |       |
+| customer_email | varchar(255)  | NO   |     | NULL                |       |
+| product_name   | varchar(255)  | NO   |     | NULL                |       |
+| quantity       | int(11)       | NO   |     | NULL                |       |
+| unit_price     | decimal(10,2) | NO   |     | NULL                |       |
+| line_total     | decimal(20,2) | NO   |     | 0.00                |       |
++----------------+---------------+------+-----+---------------------+-------+
+9 rows in set (0.003 sec)
+
+MariaDB [db_sols]>
+MariaDB [db_sols]> SELECT COUNT(*) FROM contacts;
++----------+
+| COUNT(*) |
++----------+
+|   500000 |
++----------+
+1 row in set (0.076 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM customeraddresses;
++----------+
+| COUNT(*) |
++----------+
+|   100000 |
++----------+
+1 row in set (0.017 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM customers;
++----------+
+| COUNT(*) |
++----------+
+|   100003 |
++----------+
+1 row in set (0.022 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM order_status_audit;
++----------+
+| COUNT(*) |
++----------+
+|    66756 |
++----------+
+1 row in set (0.017 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM orderitems;
++----------+
+| COUNT(*) |
++----------+
+|  1099775 |
++----------+
+1 row in set (0.199 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM orders;
++----------+
+| COUNT(*) |
++----------+
+|   200001 |
++----------+
+1 row in set (0.042 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM productcategories;
++----------+
+| COUNT(*) |
++----------+
+|       11 |
++----------+
+1 row in set (0.001 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM products;
++----------+
+| COUNT(*) |
++----------+
+|     1002 |
++----------+
+1 row in set (0.001 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM supplieraddresses;
++----------+
+| COUNT(*) |
++----------+
+|      100 |
++----------+
+1 row in set (0.000 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM suppliers;
++----------+
+| COUNT(*) |
++----------+
+|      101 |
++----------+
+1 row in set (0.001 sec)
+
+MariaDB [db_sols]> SELECT COUNT(*) FROM v_order_details;
++----------+
+| COUNT(*) |
++----------+
+|  1099775 |
++----------+
+1 row in set (1.854 sec)
+
+MariaDB [db_sols]>
